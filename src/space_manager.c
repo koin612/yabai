@@ -1,6 +1,7 @@
 #include "space_manager.h"
 
 extern struct window_manager g_window_manager;
+extern struct bar g_bar;
 extern char g_sa_socket_file[MAXLEN];
 extern int g_connection;
 
@@ -733,6 +734,7 @@ enum space_op_error space_manager_destroy_space(uint64_t sid)
         socket_wait(sockfd);
     }
     socket_close(sockfd);
+    bar_refresh(&g_bar);
 
     return SPACE_OP_ERROR_SUCCESS;
 }
@@ -750,6 +752,7 @@ void space_manager_add_space(uint64_t sid)
         socket_wait(sockfd);
     }
     socket_close(sockfd);
+    bar_refresh(&g_bar);
 }
 
 void space_manager_assign_process_to_space(pid_t pid, uint64_t sid)
